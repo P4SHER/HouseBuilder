@@ -84,9 +84,9 @@
       background: var(--accent-soft); color: var(--accent); font-size: 14px; font-weight: 700;
       margin-bottom: 10px;
     }
-    .steps p, .cols p { margin: 0; color: var(--ink-muted); font-size: 16px; }
-    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-    .cols h3 { font-size: 19px; margin: 0 0 8px; }
+    .steps p, .text p { margin: 0; color: var(--ink-muted); font-size: 16px; }
+    .text { max-width: 720px; }
+    .text h3 { font-size: 19px; margin: 0 0 8px; }
     .honest {
       background: var(--accent-soft); border-radius: 14px; padding: 18px 20px; margin-top: 26px;
       color: var(--ink);
@@ -103,7 +103,7 @@
     }
     @media (max-width: 560px) {
       body { font-size: 16px; }
-      .steps, .cols { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
       .lead { font-size: 17px; }
     }
   </style>
@@ -180,22 +180,15 @@
 
     <section>
       <h2>Магазины и цены</h2>
-      <div class="cols">
-        <div>
-          <h3>Только реальные товары</h3>
-          <p>Товары берём из каталогов магазинов и их партнёрских программ — без парсинга сайтов.
-            У каждой цены есть магазин, регион и дата. Если цены нет, так и написано: «без цены» —
-            не ноль и не выдуманная цифра.</p>
-        </div>
-        <div>
-          <h3>Партнёрские ссылки</h3>
-          <p>Ссылки на покупку ведут на сайт магазина. Часть из них партнёрские: если вы купите
-            товар по такой ссылке, магазин может заплатить нам комиссию. Цена для вас от этого
-            не меняется.</p>
-        </div>
+      <div class="text">
+        <h3>Только реальные товары</h3>
+        <p>Товары поступают из официальных каталогов магазинов, без парсинга сайтов. Для каждой
+          цены указаны магазин, регион и дата актуальности. Если цена неизвестна, позиция
+          помечается «без цены» — нулевые и оценочные значения не подставляются.</p>
       </div>
-      <p class="honest">Смета ориентировочная и не является офертой: это расчёт по плану и выбранным
-        товарам, чтобы заранее понимать бюджет и где что купить.</p>
+      <p class="honest">Смета носит ориентировочный характер и не является публичной офертой.
+        Расчёт выполняется по плану дома и выбранным товарам и позволяет заранее оценить бюджет
+        и определить, где приобрести материалы и мебель.</p>
     </section>
 
     <section id="test">
