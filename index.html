@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FloorPlan Studio — дом из реальных товаров, собранный с ИИ</title>
+  <meta name="description" content="Опишите дом — ИИ расставит мебель, подберёт отделку и реальные товары из магазинов с ценой, датой цены и ссылкой на покупку, и посчитает смету. Закрытый прототип.">
+  <!-- Подтверждение площадки Admitad: вставьте сюда мета-тег из кабинета Admitad. -->
+  <style>
+    :root {
+      --bg: #f7f5f1;
+      --paper: #ffffff;
+      --ink: #1f2328;
+      --ink-muted: #5b616b;
+      --hairline: #e3dfd7;
+      --accent: #2f6f5e;
+      --accent-soft: #e5efeb;
+      --plan: #3b4048;
+      --thread: #c07a3c;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16181b;
+        --paper: #1f2226;
+        --ink: #e8e6e1;
+        --ink-muted: #a3a8b0;
+        --hairline: #33373d;
+        --accent: #7fc3ae;
+        --accent-soft: #23332e;
+        --plan: #c9cdd3;
+        --thread: #e0a067;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+    header.top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 0;
+    }
+    .brand { font-weight: 650; letter-spacing: -0.01em; font-size: 18px; }
+    .brand span { color: var(--accent); }
+    .badge {
+      font-size: 13px; color: var(--accent); background: var(--accent-soft);
+      border-radius: 999px; padding: 4px 12px; white-space: nowrap;
+    }
+    .hero {
+      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 40px; align-items: center;
+      padding: 36px 0 56px;
+    }
+    h1 {
+      font-size: clamp(30px, 4.4vw, 46px); line-height: 1.12; letter-spacing: -0.02em;
+      margin: 0 0 18px; font-weight: 700;
+    }
+    .lead { font-size: 19px; color: var(--ink-muted); margin: 0 0 22px; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    .cta {
+      display: inline-block; color: #fff; background: var(--accent); text-decoration: none;
+      padding: 12px 20px; border-radius: 10px; font-weight: 600;
+    }
+    @media (prefers-color-scheme: dark) { .cta { color: #10201b; } }
+    .cta-note { display: block; margin-top: 10px; font-size: 14px; color: var(--ink-muted); }
+    figure.plan {
+      margin: 0; background: var(--paper); border: 1px solid var(--hairline);
+      border-radius: 16px; padding: 18px;
+    }
+    figure.plan svg { width: 100%; height: auto; display: block; }
+    figure.plan figcaption { font-size: 13px; color: var(--ink-muted); margin-top: 8px; }
+    section { padding: 44px 0; border-top: 1px solid var(--hairline); }
+    h2 { font-size: 26px; letter-spacing: -0.01em; margin: 0 0 22px; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; list-style: none; margin: 0; padding: 0; }
+    .steps li {
+      background: var(--paper); border: 1px solid var(--hairline); border-radius: 14px; padding: 18px;
+    }
+    .steps b { display: block; margin-bottom: 6px; font-size: 17px; }
+    .steps .n {
+      display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+      background: var(--accent-soft); color: var(--accent); font-size: 14px; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .steps p, .cols p { margin: 0; color: var(--ink-muted); font-size: 16px; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .cols h3 { font-size: 19px; margin: 0 0 8px; }
+    .honest {
+      background: var(--accent-soft); border-radius: 14px; padding: 18px 20px; margin-top: 26px;
+      color: var(--ink);
+    }
+    .status li { margin: 6px 0; }
+    .status .yes::marker { content: "✓  "; color: var(--accent); }
+    .status .soon::marker { content: "…  "; color: var(--ink-muted); }
+    a { color: var(--accent); }
+    footer { padding: 30px 0 44px; border-top: 1px solid var(--hairline); color: var(--ink-muted); font-size: 14px; }
+    footer p { margin: 4px 0; }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; gap: 28px; padding-top: 12px; }
+      .steps { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      body { font-size: 16px; }
+      .steps, .cols { grid-template-columns: 1fr; }
+      .lead { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">FloorPlan <span>Studio</span></div>
+      <div class="badge">Закрытый прототип</div>
+    </header>
+
+    <div class="hero">
+      <div>
+        <h1>Дом из реальных товаров — собранный вместе с ИИ</h1>
+        <p class="lead">Опишите, какой дом хотите. ИИ расставит мебель, предложит отделку и подберёт
+          под каждое место <strong>реальные товары из магазинов</strong> — с ценой, датой цены, фото,
+          размерами и ссылкой на покупку. Смета считается из этих же товаров.</p>
+        <a class="cta" href="#test">Участвовать в тесте</a>
+        <span class="cta-note">Для тех, кто строит частный дом</span>
+      </div>
+      <figure class="plan">
+        <svg viewBox="0 0 420 300" role="img" aria-label="Схема: план дома, от мест на плане тянутся линии к карточкам товаров">
+          <g fill="none" stroke="var(--plan)" stroke-width="6" stroke-linejoin="round">
+            <rect x="20" y="30" width="250" height="240"/>
+          </g>
+          <g fill="none" stroke="var(--plan)" stroke-width="3">
+            <line x1="150" y1="30" x2="150" y2="150"/>
+            <line x1="20" y1="150" x2="200" y2="150"/>
+            <line x1="200" y1="150" x2="200" y2="270"/>
+          </g>
+          <g font-size="11" fill="var(--ink-muted)" font-family="system-ui, sans-serif">
+            <text x="34" y="52">Гостиная</text>
+            <text x="164" y="52">Спальня</text>
+            <text x="34" y="172">Кухня</text>
+            <text x="212" y="172">Ванная</text>
+          </g>
+          <g fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2">
+            <rect x="40" y="95" width="80" height="34" rx="6"/>
+            <rect x="175" y="70" width="70" height="60" rx="6"/>
+            <rect x="40" y="215" width="120" height="30" rx="6"/>
+          </g>
+          <g fill="none" stroke="var(--thread)" stroke-width="1.6" stroke-dasharray="4 4">
+            <path d="M120 112 C 215 112, 245 60, 290 58"/>
+            <path d="M245 100 C 270 100, 275 140, 290 140"/>
+            <path d="M160 230 C 235 230, 255 222, 290 222"/>
+          </g>
+          <g fill="var(--paper)" stroke="var(--hairline)" stroke-width="1.5">
+            <rect x="290" y="32" width="124" height="52" rx="8"/>
+            <rect x="290" y="114" width="124" height="52" rx="8"/>
+            <rect x="290" y="196" width="124" height="52" rx="8"/>
+          </g>
+          <g font-family="system-ui, sans-serif" font-size="10">
+            <text x="299" y="52" fill="var(--ink)">Диван</text>
+            <text x="299" y="70" fill="var(--ink-muted)">цена · дата · магазин</text>
+            <text x="299" y="134" fill="var(--ink)">Кровать</text>
+            <text x="299" y="152" fill="var(--ink-muted)">цена · дата · магазин</text>
+            <text x="299" y="216" fill="var(--ink)">Кухня</text>
+            <text x="299" y="234" fill="var(--ink-muted)">цена · дата · магазин</text>
+          </g>
+        </svg>
+        <figcaption>От каждого места на плане — ниточка к карточке реального товара.</figcaption>
+      </figure>
+    </div>
+
+    <section>
+      <h2>Как это работает</h2>
+      <ol class="steps">
+        <li><span class="n">1</span><b>План</b><p>Шаблон дома, свой план или рисуете сами — стены, окна, двери, комнаты.</p></li>
+        <li><span class="n">2</span><b>Расстановка</b><p>ИИ ставит мебель и назначает отделку каждой поверхности.</p></li>
+        <li><span class="n">3</span><b>Подбор</b><p>Для каждого места — реальные товары. Не подошло: «дешевле», «светлее», «похожие».</p></li>
+        <li><span class="n">4</span><b>Смета</b><p>Отделка со всеми расходниками и мебель — по выбранным товарам.</p></li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Магазины и цены</h2>
+      <div class="cols">
+        <div>
+          <h3>Только реальные товары</h3>
+          <p>Товары берём из каталогов магазинов и их партнёрских программ — без парсинга сайтов.
+            У каждой цены есть магазин, регион и дата. Если цены нет, так и написано: «без цены» —
+            не ноль и не выдуманная цифра.</p>
+        </div>
+        <div>
+          <h3>Партнёрские ссылки</h3>
+          <p>Ссылки на покупку ведут на сайт магазина. Часть из них партнёрские: если вы купите
+            товар по такой ссылке, магазин может заплатить нам комиссию. Цена для вас от этого
+            не меняется.</p>
+        </div>
+      </div>
+      <p class="honest">Смета ориентировочная и не является офертой: это расчёт по плану и выбранным
+        товарам, чтобы заранее понимать бюджет и где что купить.</p>
+    </section>
+
+    <section id="test">
+      <h2>Где мы сейчас</h2>
+      <ul class="status">
+        <li class="yes">Редактор плана: стены, проёмы, комнаты, этажи, мебель.</li>
+        <li class="yes">Смета материалов по плану — с честными пометками «без цены».</li>
+        <li class="soon">ИИ-подбор реальных товаров и доска с карточками — в разработке.</li>
+        <li class="soon">3D-вид дома и фотореалистичные кадры комнат — в разработке.</li>
+      </ul>
+      <p>Ищем 5–10 человек, которые строят дом, чтобы проверить прототип. Напишите нам:
+        <a href="mailto:tim999ba@gmail.com">tim999ba@gmail.com</a>.</p>
+    </section>
+
+    <footer>
+      <p>© 2026 FloorPlan Studio</p>
+      <p>Сайт не использует cookies и счётчики посещений.</p>
+    </footer>
+  </div>
+</body>
+</html>
